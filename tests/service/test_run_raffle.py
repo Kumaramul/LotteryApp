@@ -42,6 +42,8 @@ class TestClass:
             return ticket_collection
 
     def test_run_raffle_for_distributed_total_money(self):
+        'For Each Group testing mehtod is available in tests/util/test_calculate_distributed_money_for_person_group'
+        
         for cus in self.mock_ticket_test['mock_ticket_test']: 
             ticket_collection = self.buy_mock_tickets_for_customer(cus)
         winning_ticket_number = self.mock_winning_ticket
