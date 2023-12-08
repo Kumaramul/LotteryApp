@@ -22,11 +22,11 @@
     |
     |_____src
     |      |  
-    |      |___model\  
-    |      |          \
-    |      |             Has-a Relationship
-    |      |           /                 
-    |      |___service/
+    |      |___model  
+    |      |          
+    |      |             
+    |      |                            
+    |      |___service
     |      |  
     |      |___util
     |       
