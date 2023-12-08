@@ -1,29 +1,40 @@
-import unittest
-from unittest.mock import patch
+from unittest import mock
+import  builtins
 from src.service import BuyTicket
 
-class TestClass(unittest.TestCase):
+class TestClass:
     
-    @patch('builtins.input', lambda _: 'Jhon,2')   
-    def test_buy_ticket(self):
-        mock_pot_size =100
-        mock_ticket_price = 5
-        number_of_ticket = 2
-        mock_ticket_collection_before_selling= {}
-        mock_ticket_collection ,returned_pot_size = BuyTicket.buyTicket(mock_ticket_collection_before_selling , mock_pot_size, mock_ticket_price)
+    buy_dict_test = { 'buy_dict_test': [
+                     {'name':'test1','mock_pot_size': 3500,'mock_ticket_price' : 5,'number_of_ticket' : 4},
+                     {'name':'test2','mock_pot_size': 100,'mock_ticket_price' : 5,'number_of_ticket' : 5},
+                     {'name':'test3','mock_pot_size': 1233,'mock_ticket_price' : 5,'number_of_ticket' : 1}
+                      ]}
 
-        self.assertEqual(returned_pot_size, mock_pot_size+(number_of_ticket*mock_ticket_price))
-        self.assertEqual(mock_ticket_collection['Jhon'].number_of_ticket,number_of_ticket)
+    def test_for_validate_pot_size_after_buying_ticket(self):
+            
+            for obj in self.buy_dict_test['buy_dict_test']:
+                input_name = obj['name']
+                input_number_of_ticket = obj['number_of_ticket']
+                with mock.patch.object(builtins, 'input', lambda _: input_name+','+str(input_number_of_ticket) ):
+                    
+                    mock_ticket_collection_before_selling= {}
+                    mock_ticket_collection ,returned_pot_size = BuyTicket.buyTicket(mock_ticket_collection_before_selling , obj['mock_pot_size'], obj['mock_ticket_price'])
 
-    @patch('builtins.input', lambda _: 'AB, 3')   
-    def test_buy_ticket_two(self):
-        mock_pot_size =3500
-        mock_ticket_price = 5
-        number_of_ticket = 3
-        mock_ticket_collection_before_selling= {}
-        mock_ticket_collection ,returned_pot_size = BuyTicket.buyTicket(mock_ticket_collection_before_selling , mock_pot_size, mock_ticket_price)
+                    assert returned_pot_size == (obj['mock_pot_size']+(obj['number_of_ticket']*obj['mock_ticket_price']))
+            
 
-        self.assertEqual(returned_pot_size, mock_pot_size+(number_of_ticket*mock_ticket_price))
-        self.assertEqual(mock_ticket_collection['AB'].number_of_ticket,number_of_ticket)
-    
-    
+    def test_for_validate_customer_tickets_after_buying_ticket(self):
+            
+            for obj in self.buy_dict_test['buy_dict_test']:
+                input_name = obj['name']
+                input_number_of_ticket = obj['number_of_ticket']
+                with mock.patch.object(builtins, 'input', lambda _: input_name+','+str(input_number_of_ticket) ):
+                    
+                    mock_ticket_collection_before_selling= {}
+                    mock_ticket_collection ,returned_pot_size = BuyTicket.buyTicket(mock_ticket_collection_before_selling , obj['mock_pot_size'], obj['mock_ticket_price'])
+
+                    assert  mock_ticket_collection[input_name].get_number_of_ticket() == obj['number_of_ticket']
+
+       
+
+ 
